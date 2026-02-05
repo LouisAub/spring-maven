@@ -21,22 +21,39 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package -DskipTests
-      
+
+      - name: Configure Maven settings
+        run: |
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml <<EOF
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                                        https://maven.apache.org/xsd/settings-1.0.0.xsd">
+            <servers>
+              <server>
+                <id>nexus</id>
+                <username>${NEXUS_USER}</username>
+                <password>${NEXUS_PASSWORD}</password>
+              </server>
+            </servers>
+          </settings>
+          EOF
+        env:
+          NEXUS_USER: ${{ secrets.NEXUS_USER }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+
       ##- name: SonarQube Analysis
        # run: |
-        #  mvn sonar:sonar \
-         # -Dsonar.projectKey=springboot-app \
-         # -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-         # -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+       #   mvn sonar:sonar \
+       #   -Dsonar.projectKey=springboot-app \
+       #   -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+       #   -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
-      #- name: Publish to Nexus
-       # if: github.ref == 'refs/heads/main'
-       # run: mvn deploy -DskipTests
-        #env:
-          #NEXUS_USER: ${{ secrets.NEXUS_USER }}
-          #NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-
-
+      - name: Publish to Nexus
+        run: mvn deploy -s ~/.m2/settings.xml -DskipTests \
+                        -Dmaven.wagon.http.ssl.insecure=true \
+                        -Dmaven.wagon.http.ssl.allowall=true
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -48,3 +65,4 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/springboot-app:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/springboot-app:latest
+
