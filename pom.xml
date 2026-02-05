@@ -37,7 +37,11 @@
 <distributionManagement>
     <repository>
         <id>nexus</id>
-        <url>https://nondomineering-stomatological-johnathan.ngrok-free.dev/repository/maven-public/</url>
+        <url>https://nondomineering-stomatological-johnathan.ngrok-free.dev/repository/spring-releases/</url>
     </repository>
+    <snapshotRepository>
+        <id>nexus</id>
+        <url>https://nondomineering-stomatological-johnathan.ngrok-free.dev/repository/maven-public/</url>
+    </snapshotRepository>
 </distributionManagement>
-</project>
+
