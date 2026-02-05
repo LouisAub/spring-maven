@@ -22,7 +22,7 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
       
-      #- name: SonarQube Analysis
+      ##- name: SonarQube Analysis
        # run: |
         #  mvn sonar:sonar \
          # -Dsonar.projectKey=springboot-app \
