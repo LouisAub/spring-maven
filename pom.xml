@@ -37,7 +37,7 @@
 <distributionManagement>
     <repository>
         <id>nexus</id>
-        <url>http://10.0.2.15:8081/repository/maven-public/</url>
+        <url>https://nondomineering-stomatological-johnathan.ngrok-free.dev/repository/maven-public/</url>
     </repository>
 </distributionManagement>
 </project>
