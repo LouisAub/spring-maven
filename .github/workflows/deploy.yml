@@ -51,9 +51,12 @@ jobs:
        #   -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: Publish to Nexus
-        run: mvn deploy -s ~/.m2/settings.xml -DskipTests \
-                        -Dmaven.wagon.http.ssl.insecure=true \
-                        -Dmaven.wagon.http.ssl.allowall=true
+        run: |
+          mvn deploy -s ~/.m2/settings.xml \
+            -DskipTests \
+          -Dmaven.wagon.http.ssl.insecure=true \
+          -Dmaven.wagon.http.ssl.allowall=true
+
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
