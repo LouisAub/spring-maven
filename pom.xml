@@ -41,8 +41,9 @@
     </repository>
     <snapshotRepository>
         <id>nexus</id>
-        <url>https://nondomineering-stomatological-johnathan.ngrok-free.dev/repository/maven-public/</url>
+        <url>https://nondomineering-stomatological-johnathan.ngrok-free.dev/repository/spring-snapshots/</url>
     </snapshotRepository>
 </distributionManagement>
+
 
 </project>
